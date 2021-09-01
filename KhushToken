@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-3.0
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.5.0/contracts/token/ERC20/ERC20.sol";
+//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.5.0/contracts/token/ERC20/ERC20Detailed.sol";
+//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.5.0/contracts/token/ERC20/IERC20.sol";
+
+pragma solidity ^0.5.0;
+contract MyToken is ERC20 {
+      
+    struct Token{  
+    string  name;                   
+    uint8  decimals;                
+    string  symbol;                
+    uint256 tS;
+        
+    }
+        address owner;
+         uint256 public _allowedBalance;
+
+    mapping(address=> Token) public myTokened;
+    constructor()public{
+        owner=msg.sender;
+}
+     function minting(address account, uint256 amount) public {
+
+         require(ERC20.approve(account,amount) ,"balance or address not allwed");
+         
+         _allowedBalance=ERC20.allowance(owner,account);
+         require(_allowedBalance>=balanceOf(account),"balance or address not allowed");
+            ERC20._mint(account, amount);
+            uint256  t=ERC20.balanceOf(account);
+
+   myTokened[account]= Token("khush token",0,"KY",t);
+      
+     }      
+    }
+
+    
+    
+    
